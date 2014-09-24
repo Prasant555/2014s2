@@ -9,11 +9,7 @@ package bookcompany;
 import java.sql.Connection;
 import junit.framework.Test;
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
+
 
 
 
@@ -25,7 +21,7 @@ import org.junit.Ignore;
 public class CustomerTest extends TestCase {
     //private Connection con;
     
-    private static DBConnection DB = new DBConnection("C:/Users/Anusheel/Documents/GitHub/2014s2/BookCompany.accdb");
+    private static DBConnection DB = new DBConnection("C:/Users/Aly/Documents/GitHub/2014s2/BookCompany.accdb");
    
     public CustomerTest(String testName) {
         super(testName);
@@ -36,6 +32,7 @@ public class CustomerTest extends TestCase {
      */
    
     public void testAdd() {
+        /* TEST FOR SUCCESSFULL ADD OF DATABASE*/
          System.out.println(" *CustomerJUnit3Test: testAdd");
         //Connection con = null;
         Customer instance = new Customer();
@@ -49,6 +46,22 @@ public class CustomerTest extends TestCase {
         String expected = "The Customer Has Been Added";
         String result = instance.add(DB.con);
         assertEquals(expected,result);
+        
+        /* TEST FOR EXCEPTION DUE TO ERROR */
+        //////////////////////////////////////////////////////////
+      /*  Customer instance2 = new Customer();
+        Connection con = null;
+        instance.setFName("Khan");
+        instance.setLName("Peter");
+        instance.setAddress("Nabua");
+        instance.setAge(8);
+        instance.setPhone("89767");
+        instance.setID(14);
+        
+        String expected2 = "Error: java.lang.NullPointerException";
+        String result2 = instance2.add(con);
+        assertEquals(expected2,result2);*/
+      
     }
 
     /**
@@ -99,6 +112,16 @@ public class CustomerTest extends TestCase {
         String expResult = "The Above Record Was Found";
         String result = instance.find(DB.con);
         assertEquals(expResult, result);
+        
+        /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
+        //////////////////////////////////////////////////////////
+        Customer instance2 = new Customer();
+        instance.setID(5);
+         Connection con = null;
+        String expResult2 = "Error: java.lang.NullPointerException";
+        String result2 = instance2.find(con);
+        assertEquals(expResult2, result2);
+         
     }
 
     /**
