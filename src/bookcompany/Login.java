@@ -15,7 +15,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        DB = new DBConnection("C:/Users/Anusheel/Documents/GitHub/2014s2/BookCompany.accdb");
+        DB = new DBConnection("C:/Users/Aly/Documents/GitHub/2014s2/BookCompany.accdb");
         jTextField1.setEditable(false);
     }
 
