@@ -42,23 +42,50 @@ public class CustomerTest extends TestCase {
         String expected = "The Customer Has Been Added";
         String result = instance.add(DB.con);
         assertEquals(expected,result);
-        
-        /* TEST FOR EXCEPTION DUE TO ERROR */
-        //////////////////////////////////////////////////////////
-      /*  Customer instance2 = new Customer();
-        Connection con = null;
-        instance.setFName("Khan");
-        instance.setLName("Peter");
-        instance.setAddress("Nabua");
-        instance.setAge(8);
-        instance.setPhone("89767");
-        instance.setID(14);
-        
-        String expected2 = "Error: java.lang.NullPointerException";
-        String result2 = instance2.add(con);
-        assertEquals(expected2,result2);*/
       
     }
+    
+    /* TEST FOR EXCEPTION DUE TO ERROR */
+    public void testAdd_2()
+    {
+         System.out.println(" *CustomerJUnit3Test: testAdd_2");
+        Customer instance2 = new Customer();
+        Connection con = null;
+        instance2.setFName("Khan");
+        instance2.setLName("Peter");
+        instance2.setAddress("Nabua");
+        instance2.setAge(8);
+        instance2.setPhone("89767");
+        instance2.setID(14);
+        
+        String expected2 = "Error java.lang.NullPointerException";
+        String result2 = instance2.add(con);
+        assertEquals(expected2,result2);
+    }
+    
+     /* TEST FOR INPUT STRING*/
+    public void testAdd_3()
+    {
+        System.out.println(" *CustomerJUnit3Test: testAdd_3");
+        Customer instance = new Customer();
+        StringBuilder builder = new StringBuilder();
+        for(int i=0; i < 10000000; i++)
+        {
+            builder.append("W");
+        }
+        instance.setID(8);
+        instance.setFName(builder.toString());
+        instance.setLName(builder.toString());
+        instance.setAddress(builder.toString());
+        instance.setAge(23);
+        instance.setPhone(builder.toString());
+        
+        
+        String expected = "Error: java.sql.SQLException: [Microsoft][ODBC Microsoft Access Driver] Query is too complex.";
+        String result = instance.update(DB.con);
+        assertEquals(expected,result);
+    }
+    
 
     ////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -108,7 +135,7 @@ public class CustomerTest extends TestCase {
     
     public void testUpdate_3(){
         
-         System.out.println(" *CustomerJUnit3Test: testUpdate_3");
+        System.out.println(" *CustomerJUnit3Test: testUpdate_3");
         Customer instance = new Customer();
         instance.setID(8);
         String A = instance.find(DB.con);
@@ -141,17 +168,23 @@ public class CustomerTest extends TestCase {
         String expResult = "The Above Record Was Found";
         String result = instance.find(DB.con);
         assertEquals(expResult, result);
+      
+    }
+    
+    
+    /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
+    public void testFind_2(){
         
-        /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
-        //////////////////////////////////////////////////////////
+        System.out.println("*CustomerJUnit3Test: testFind_2");
         Customer instance2 = new Customer();
-        instance.setID(5);
-         Connection con = null;
+        instance2.setID(5);
+        Connection con = null;
         String expResult2 = "Error: java.lang.NullPointerException";
         String result2 = instance2.find(con);
         assertEquals(expResult2, result2);
-         
+        
     }
+       
 
     //////////////////////////////////////////////////////////////////////////
     /**
