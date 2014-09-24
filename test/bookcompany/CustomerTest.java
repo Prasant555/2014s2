@@ -9,11 +9,6 @@ package bookcompany;
 import java.sql.Connection;
 import junit.framework.Test;
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 
 
 
@@ -51,17 +46,19 @@ public class CustomerTest extends TestCase {
         assertEquals(expected,result);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
     /**
      * Test of update method, of class Customer.
      */
+    /* TEST FOR SUCCESSFULL UPDATE OF DATABASE*/
     public void testUpdate() {
         System.out.println(" *CustomerJUnit3Test: testUpdate");
         /* TEST FOR SUCCESSFULL UPDATE OF DATABASE*/
         Customer instance = new Customer();
         instance.setID(8);
         String A = instance.find(DB.con);
-        instance.setFName("Khan");
-        instance.setLName("Peter");
+        instance.setFName("Peter");
+        instance.setLName("Khan");
         instance.setAddress("Nabua");
         instance.setAge(23);
         instance.setPhone("89767");
@@ -71,9 +68,13 @@ public class CustomerTest extends TestCase {
         String result = instance.update(DB.con);
         assertEquals(expected,result);
         
-        /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
-        //////////////////////////////////////////////////////////
+    }
+    
+    /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
+
+    public void testUpdate_2(){
         
+        System.out.println(" *CustomerJUnit3Test: testUpdate_2");
         Customer instance2 = new Customer();
         Connection con = null;
         String  B = instance2.find(con);
@@ -84,10 +85,37 @@ public class CustomerTest extends TestCase {
         instance2.setPhone("89767");
         
         String expected2 = "Error: java.lang.NullPointerException";
-        String result2 = instance.update(con);
+        String result2 = instance2.update(con);
         assertEquals(expected2,result2);
+        
     }
-
+    
+    /* TEST FOR INPUT STRING*/
+    
+    public void testUpdate_3(){
+        
+         System.out.println(" *CustomerJUnit3Test: testUpdate_3");
+        Customer instance = new Customer();
+        instance.setID(8);
+        String A = instance.find(DB.con);
+        StringBuilder builder = new StringBuilder();
+        for(int i=0; i < 10000000; i++)
+        {
+            builder.append("W");
+        }
+        instance.setFName(builder.toString());
+        instance.setLName(builder.toString());
+        instance.setAddress(builder.toString());
+        instance.setAge(23);
+        instance.setPhone(builder.toString());
+        
+        
+        String expected = "Error: java.sql.SQLException: [Microsoft][ODBC Microsoft Access Driver] Query is too complex.";
+        String result = instance.update(DB.con);
+        assertEquals(expected,result);
+        
+    }
+    ///////////////////////////////////////////////////////////////////////////////////
     /**
      * Test of find method, of class Customer.
      */
@@ -101,6 +129,7 @@ public class CustomerTest extends TestCase {
         assertEquals(expResult, result);
     }
 
+    //////////////////////////////////////////////////////////////////////////
     /**
      * Test of delete method, of class Customer.
      */
@@ -114,16 +143,22 @@ public class CustomerTest extends TestCase {
         String expResult = "The Record Was Deleted";
         String result = instance.delete(DB.con);
         assertEquals(expResult, result);
+       
+    }
+    
+    /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
+   
+    public void testDelete_2() {
         
-        /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
-        ///////////////////////////////////////////////////
+        
+        System.out.println("*CustomerJUnit3Test: testDelete_2");
         Connection con = null;
         Customer instance2 = new Customer();
         instance2.setID(1);
         String expected2 = "Error: java.lang.NullPointerException";
-        String result2 = instance.delete(con);
+        String result2 = instance2.delete(con);
         assertEquals(expected2,result2);
-       
+        
     }
 
     
