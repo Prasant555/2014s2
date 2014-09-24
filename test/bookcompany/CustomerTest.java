@@ -9,6 +9,12 @@ package bookcompany;
 import java.sql.Connection;
 import junit.framework.Test;
 import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+
 
 
 
@@ -23,11 +29,12 @@ public class CustomerTest extends TestCase {
    
     public CustomerTest(String testName) {
         super(testName);
+       
     }
     /**
      * Test of add method, of class Customer.
      */
-    
+   
     public void testAdd() {
          System.out.println(" *CustomerJUnit3Test: testAdd");
         //Connection con = null;
@@ -49,8 +56,7 @@ public class CustomerTest extends TestCase {
      */
     public void testUpdate() {
         System.out.println(" *CustomerJUnit3Test: testUpdate");
-        
-       // Connection con = null;
+        /* TEST FOR SUCCESSFULL UPDATE OF DATABASE*/
         Customer instance = new Customer();
         instance.setID(8);
         String A = instance.find(DB.con);
@@ -64,13 +70,29 @@ public class CustomerTest extends TestCase {
         String expected = "The Record Was Updated";
         String result = instance.update(DB.con);
         assertEquals(expected,result);
+        
+        /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
+        //////////////////////////////////////////////////////////
+        
+        Customer instance2 = new Customer();
+        Connection con = null;
+        String  B = instance2.find(con);
+        instance2.setFName("Khan");
+        instance2.setLName("Peter");
+        instance2.setAddress("Nabua");
+        instance2.setAge(23);
+        instance2.setPhone("89767");
+        
+        String expected2 = "Error: java.lang.NullPointerException";
+        String result2 = instance.update(con);
+        assertEquals(expected2,result2);
     }
 
     /**
      * Test of find method, of class Customer.
      */
     public void testFind() {
-        System.out.println("find");
+        System.out.println("*CustomerJUnit3Test: testFind");
         //Connection con = null;
         Customer instance = new Customer();
         instance.setID(5);
@@ -83,13 +105,24 @@ public class CustomerTest extends TestCase {
      * Test of delete method, of class Customer.
      */
     public void testDelete() {
-        System.out.println("delete");
+        System.out.println("*CustomerJUnit3Test: testDelete");
+        
+        /*TEST FOR SUCCESSFULL DELETION OF DATA FROM DATABASE*/
         //Connection con = null;
         Customer instance = new Customer();
         instance.setID(1);
         String expResult = "The Record Was Deleted";
         String result = instance.delete(DB.con);
         assertEquals(expResult, result);
+        
+        /* TEST FOR EXCEPTION DUE TO CONNECTION ERROR*/
+        ///////////////////////////////////////////////////
+        Connection con = null;
+        Customer instance2 = new Customer();
+        instance2.setID(1);
+        String expected2 = "Error: java.lang.NullPointerException";
+        String result2 = instance.delete(con);
+        assertEquals(expected2,result2);
        
     }
 
